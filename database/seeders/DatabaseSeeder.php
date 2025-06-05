@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\UserRole;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -16,8 +17,21 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Admin User',
+            'email' => 'admin@example.com',
+            'role' => UserRole::Admin->value
+        ]);
+
+        User::factory()->create([
+            'name' => 'Organizer User',
+            'email' => 'organizer@example.com',
+            'role' => UserRole::Organizer->value
+        ]);
+
+        User::factory()->create([
+            'name' => 'Attendee User',
+            'email' => 'attendee@example.com',
+            'role' => UserRole::Attendee->value
         ]);
     }
 }
