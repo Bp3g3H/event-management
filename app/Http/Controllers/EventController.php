@@ -2,19 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EventIndexRequest;
 use App\Http\Requests\EventRequest;
 use App\Http\Resources\EventResponse;
 use App\Models\Event;
-use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
         /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(EventIndexRequest $request)
     {
-        $events = Event::with('organizer')->get();
+        $validated = $request->validated();
+
+         $events = Event::with('organizer')
+            ->filter($validated)
+            ->paginate($validated['per_page'] ?? 10);
         return EventResponse::collection($events);
     }
 

@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,9 +17,13 @@ return new class extends Migration
             $table->text('description');
             $table->date('date');
             $table->string('location', 255);
-            $table->foreignIdFor(User::class, 'organizer_id')->index();
+            $table->unsignedBigInteger('organizer_id')->index();
             $table->timestamps();
-        });
+
+            $table->foreign('organizer_id', 'fk_event_user')
+                ->references('id')->on('users')
+                ->onDelete('cascade');
+    });
     }
 
     /**
