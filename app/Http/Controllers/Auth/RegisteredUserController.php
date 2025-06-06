@@ -41,6 +41,6 @@ class RegisteredUserController extends Controller
             'email' => $user->email,
             'created_at' => $user->created_at,
             'updated_at' => $user->updated_at,
-        ], 201);
+        ], Response::HTTP_CREATED);
     }
 }

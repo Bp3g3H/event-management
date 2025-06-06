@@ -8,6 +8,7 @@ use App\Http\Requests\AttendeeIndexRequest;
 use App\Http\Requests\AttendeeUpdateRequest;
 use App\Http\Resources\AttendeeResponse;
 use App\Models\Attendee;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class AttendeeController extends Controller
@@ -31,8 +32,18 @@ class AttendeeController extends Controller
     public function store(AttendeeCreateRequest $request)
     {
         $validated = $request->validated();
+        $userId = Auth::id();
+        $exists = Attendee::where('user_id', $userId)
+            ->where('event_id', $validated['event_id'])
+            ->exists();
+
+        if ($exists) {
+            return response()->json([
+                'message' => 'You have already registered as an attendee for this event.'
+            ], Response::HTTP_CONFLICT);
+        }
         $attendee = Attendee::create([
-            'user_id' => Auth::id(),
+            'user_id' => $userId,
             'event_id' => $validated['event_id'],
             'rsvp_status' => $validated['rsvp_status'] ?? RsvpStatus::Pending->value,
         ]);
