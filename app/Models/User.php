@@ -50,19 +50,18 @@ class User extends Authenticatable
         ];
     }
 
-        /**
-     * Get the events organized by the user.
-     */
     public function organizedEvents(): HasMany
     {
         return $this->hasMany(Event::class, 'organizer_id');
     }
 
-        /**
-     * The events that the user is attending.
-     */
+    public function attendees(): HasMany
+    {
+        return $this->hasMany(Attendee::class, 'user_id');
+    }
+
     public function attendingEvents(): BelongsToMany
     {
-        return $this->belongsToMany(Event::class, 'event_user', 'user_id', 'event_id');
+        return $this->belongsToMany(Event::class, 'attendees', 'user_id', 'event_id');
     }
 }

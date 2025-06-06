@@ -10,38 +10,59 @@ class AuthenticationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_users_can_authenticate_using_the_login_screen(): void
+    public function test_users_can_authenticate(): void
     {
         $user = User::factory()->create();
 
-        $response = $this->post('/login', [
+        $response = $this->post('/api/login', [
             'email' => $user->email,
             'password' => 'password',
         ]);
 
-        $this->assertAuthenticated();
-        $response->assertNoContent();
+        $response->assertOk();
+        $response->assertJsonStructure([
+            'access_token',
+            'token_type',
+        ]);
     }
 
     public function test_users_can_not_authenticate_with_invalid_password(): void
     {
         $user = User::factory()->create();
 
-        $this->post('/login', [
+         $response = $this->post('/api/login', [
             'email' => $user->email,
             'password' => 'wrong-password',
         ]);
-
-        $this->assertGuest();
+ 
+        $response->assertStatus(422);
+        $response->assertJson([
+            'message' => 'These credentials do not match our records.',
+            'errors' => [
+                'email' => [
+                    'These credentials do not match our records.'
+                ]
+            ]
+        ]);
     }
 
     public function test_users_can_logout(): void
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)->post('/logout');
+        $loginResponse = $this->post('/api/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
 
-        $this->assertGuest();
-        $response->assertNoContent();
+        $token = $loginResponse->json('access_token');
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->post('/api/logout');
+
+        $response->assertOk();
+        $response->assertJson([
+            'message' => 'Logged out successfully'
+        ]);
     }
 }
