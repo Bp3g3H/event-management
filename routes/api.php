@@ -14,8 +14,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/attendees', [AttendeeController::class, 'index']);
     Route::post('/attendees', [AttendeeController::class, 'store']);
     Route::get('/attendees/{attendee}', [AttendeeController::class, 'show']);
-    Route::patch('/attendees/{attendee}', [AttendeeController::class, 'update']);
-    Route::delete('/attendees/{attendee}', [AttendeeController::class, 'destroy']);
+    Route::patch('/attendees/{attendee}', [AttendeeController::class, 'update'])->can('update', 'attendee');
+    Route::delete('/attendees/{attendee}', [AttendeeController::class, 'destroy'])->can('delete', 'attendee');
 });
 
 require __DIR__.'/auth.php';

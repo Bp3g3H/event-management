@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -34,6 +35,10 @@ return Application::configure(basePath: dirname(__DIR__))
                 return response()->json([
                     'message' => $model . ' not found'
                 ], Response::HTTP_NOT_FOUND);
+            } else if ($previous instanceof AuthorizationException) {
+                return response()->json([
+                    'message' => 'This action is unauthorized'
+                ], Response::HTTP_FORBIDDEN); 
             }
         });
     })->create();
