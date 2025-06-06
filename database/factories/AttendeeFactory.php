@@ -27,6 +27,18 @@ class AttendeeFactory extends Factory
                 RsvpStatus::Accepted->value,
                 RsvpStatus::Declined->value
             ]),
+            'check_in' => false,
+            'check_in_timestamp' => null
         ];
+    }
+
+    public function checkedIn(): static
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'check_in' => true,
+                'check_in_timestamp' => now(),
+            ];
+        });
     }
 }

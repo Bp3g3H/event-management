@@ -14,6 +14,7 @@ class Attendee extends Model
         'user_id',
         'event_id',
         'rsvp_status',
+        'check_in',
     ];
 
     public function user(): BelongsTo
@@ -69,5 +70,11 @@ class Attendee extends Model
         } elseif (in_array($sortBy, ['rsvp_status', 'created_at'])) {
             $query->orderBy($sortBy, $sortOrder);
         }
+    }
+
+    public function checkIn(): void
+    {
+        $this->check_in = true;
+        $this->save();
     }
 }

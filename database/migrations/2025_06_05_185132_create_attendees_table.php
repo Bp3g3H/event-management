@@ -16,6 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('event_id');
             $table->enum('rsvp_status', ['pending', 'accepted', 'declined'])->default('pending');
+            $table->boolean('check_in')->default(false);
+            $table->timestamp('check_in_timestamp')->nullable();
             $table->timestamps();
 
             $table->unique(['user_id', 'event_id']);

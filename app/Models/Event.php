@@ -20,6 +20,10 @@ class Event extends Model
         'organizer_id',
     ];
 
+    protected $casts = [
+        'date' => 'date',
+    ];
+
     public function organizer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'organizer_id');
@@ -57,5 +61,15 @@ class Event extends Model
         if (!empty($filters['organizer_id'])) {
             $query->where('organizer_id', $filters['organizer_id']);
         }
+    }
+
+    public function IsOpenForCheckIn() : bool
+    {
+        $eventDate = new \DateTime($this->date);
+        $dayBefore = (clone $eventDate)->modify('-1 day');
+        $eventDate->setTime(23,59,59);
+        $now = new \DateTime();
+
+        return $now < $dayBefore || $now > $eventDate;
     }
 }

@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AttendeeController;
+use App\Http\Controllers\CheckInController;
 use App\Http\Controllers\EventController;
+use App\Http\Middleware\EnsureUserIsAttendee;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -10,6 +12,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/events/{event}', [EventController::class, 'show']);
     Route::put('/events/{event}', [EventController::class, 'update']);
     Route::delete('/events/{event}', [EventController::class, 'destroy']);
+
+    Route::post('/events/{event}/check-in', CheckInController::class)->middleware(EnsureUserIsAttendee::class);
 
     Route::get('/attendees', [AttendeeController::class, 'index']);
     Route::post('/attendees', [AttendeeController::class, 'store']);
