@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\FilterAndSort;
 
 use App\Enums\RsvpStatus;
 use App\Models\Attendee;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\FilterAndSort;
 
 use App\Models\Event;
 use App\Models\User;
@@ -41,7 +41,7 @@ class EventFilterScopeTest extends TestCase
         $results = Event::filter(['date' => '2025-06-10'])->get();
 
         $this->assertCount(1, $results);
-        $this->assertEquals('2025-06-10', $results->first()->date);
+        $this->assertEquals('2025-06-10', $results->first()->date->toDateString());
     }
 
     public function test_filter_by_location()
