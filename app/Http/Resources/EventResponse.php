@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class EventResponse extends JsonResource
@@ -20,11 +19,7 @@ class EventResponse extends JsonResource
             'description' => $this->description,
             'date' => $this->date,
             'location' => $this->location,
-            'organizer' => $this->organizer ? [
-                'id' => $this->organizer->id,
-                'name' => $this->organizer->name,
-                'email' => $this->organizer->email,
-            ] : null,
+            'organizer' => UserResponse::make($this->whenLoaded('user')),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

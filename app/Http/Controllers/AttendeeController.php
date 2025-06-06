@@ -2,64 +2,53 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\RsvpStatus;
+use App\Http\Requests\AttendeeCreateRequest;
+use App\Http\Requests\AttendeeIndexRequest;
+use App\Http\Requests\AttendeeUpdateRequest;
+use App\Http\Resources\AttendeeResponse;
 use App\Models\Attendee;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AttendeeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(AttendeeIndexRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $attendees = Attendee::with(['user', 'event', 'event.organizer'])
+            ->filterAndSort($validated, Auth::id())
+            ->paginate($validated['per_page'] ?? 15);
+
+        return AttendeeResponse::collection($attendees);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Attendee $attendee)
     {
-        //
+        return new AttendeeResponse($attendee->load(['user', 'event']));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Attendee $attendee)
+    public function store(AttendeeCreateRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $attendee = Attendee::create([
+            'user_id' => Auth::id(),
+            'event_id' => $validated['event_id'],
+            'rsvp_status' => $validated['rsvp_status'] ?? RsvpStatus::Pending->value,
+        ]);
+
+        return new AttendeeResponse($attendee);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Attendee $attendee)
+    public function update(AttendeeUpdateRequest $request, Attendee $attendee)
     {
-        //
+        $attendee->update($request->validated());
+        return new AttendeeResponse($attendee);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Attendee $attendee)
     {
-        //
+        $attendee->delete();
+        return response()->json(['message' => 'Attendee deleted successfully']);
     }
 }
