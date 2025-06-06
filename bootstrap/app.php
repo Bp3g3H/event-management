@@ -1,8 +1,10 @@
 <?php
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Response;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -23,5 +25,15 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->renderable(function (Throwable $e) {
+            $previous = $e->getPrevious();
+            if ($previous instanceof ModelNotFoundException) {
+                $fullModel = $previous->getModel();
+                $model = str($fullModel)->afterLast('\\');
+                
+                return response()->json([
+                    'message' => $model . ' not found'
+                ], Response::HTTP_NOT_FOUND);
+            }
+        });
     })->create();
