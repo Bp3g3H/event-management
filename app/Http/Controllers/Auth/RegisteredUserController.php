@@ -19,7 +19,7 @@ class RegisteredUserController extends Controller
      */
     public function store(RegisterRequest $request): JsonResponse
     {
-       $validated = $request->validated();
+        $validated = $request->validated();
 
         $user = User::create([
             'name' => $validated['name'],

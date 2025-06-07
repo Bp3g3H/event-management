@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Enums\RsvpStatus;
-use App\Http\Requests\AttendeeStoreRequest;
 use App\Http\Requests\AttendeeIndexRequest;
+use App\Http\Requests\AttendeeStoreRequest;
 use App\Http\Requests\AttendeeUpdateRequest;
 use App\Http\Resources\AttendeeResponse;
 use App\Models\Attendee;
