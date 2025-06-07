@@ -14,9 +14,9 @@ class AttendeeControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected function authenticate()
+     protected function authenticate(?User $user = null): User
     {
-        $user = User::factory()->create();
+        $user = $user ?: User::factory()->create();
         $this->actingAs($user, 'sanctum');
 
         return $user;
@@ -204,5 +204,38 @@ class AttendeeControllerTest extends TestCase
         ]);
         $response = $this->deleteJson("/api/attendees/{$attendee->id}");
         $response->assertStatus(Response::HTTP_FORBIDDEN);
+    }
+
+    public function test_admin_can_see_all_attendees()
+    {
+        $admin = User::factory()->admin()->create();
+        $user1 = User::factory()->attendee()->create();
+        $user2 = User::factory()->attendee()->create();
+
+        $attendee1 = Attendee::factory()->create(['user_id' => $user1->id]);
+        $attendee2 = Attendee::factory()->create(['user_id' => $user2->id]);
+
+        $this->authenticate($admin);
+        $response = $this->getJson('/api/attendees');
+
+        $response->assertOk();
+        $response->assertJsonFragment(['id' => $attendee1->id]);
+        $response->assertJsonFragment(['id' => $attendee2->id]);
+    }
+
+    public function test_attendee_can_see_only_their_own_attendees()
+    {
+        $attendeeUser = User::factory()->attendee()->create();
+        $otherUser = User::factory()->attendee()->create();
+
+        $myAttendee = Attendee::factory()->create(['user_id' => $attendeeUser->id]);
+        $otherAttendee = Attendee::factory()->create(['user_id' => $otherUser->id]);
+
+        $this->authenticate($attendeeUser);
+        $response = $this->getJson('/api/attendees');
+
+        $response->assertOk();
+        $response->assertJsonFragment(['id' => $myAttendee->id]);
+        $response->assertJsonMissing(['id' => $otherAttendee->id]);
     }
 }

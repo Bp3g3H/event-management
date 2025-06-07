@@ -16,9 +16,14 @@ class AttendeeController extends Controller
     public function index(AttendeeIndexRequest $request)
     {
         $validated = $request->validated();
+        $user = Auth::user();
 
+        $userId = null;
+        if (!$user->isAdmin()) {
+            $userId = $user->id;
+        }
         $attendees = Attendee::with(['user', 'event', 'event.organizer'])
-            ->filterAndSort($validated, Auth::id())
+            ->filterAndSort($validated,  $userId)
             ->paginate($validated['per_page'] ?? 15);
 
         return AttendeeResponse::collection($attendees);
