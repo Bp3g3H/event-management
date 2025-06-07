@@ -6,6 +6,29 @@ Follow these steps to install and run the Event Management project on your machi
 
 ---
 
+## 🧰 System Requirements
+
+### General Requirements
+
+| Requirement     | Version                                    |
+|-----------------|--------------------------------------------|
+| PHP             | >= 8.2                                     |
+| Composer        | >= 2.5                                     |
+| Database        | MySQL 8+ / PostgreSQL 13+ / SQLite         |
+| Git             | Latest                                     |
+
+### Docker Requirements
+
+#### Windows:
+- **WSL2 (Windows Subsystem for Linux v2)**
+- **Docker Desktop** (with WSL integration enabled)
+- Ubuntu or Debian as your WSL distro
+
+#### macOS / Linux:
+- Docker installed and running
+
+---
+
 ### 🐘 Option 1: Using Docker with Laravel Sail (Recommended)
 
 1. **Clone the repository**
