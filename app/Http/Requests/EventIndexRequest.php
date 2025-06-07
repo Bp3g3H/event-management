@@ -29,6 +29,8 @@ class EventIndexRequest extends FormRequest
             'organizer' => 'sometimes|string|max:255',
             'organizer_id' => 'sometimes|integer|exists:users,id',
             'per_page' => 'sometimes|integer|min:1|max:100',
+            'sort_by' => 'sometimes|string|in:title,description,date,location,organizer,organizer_id,created_at',
+            'sort_order' => 'sometimes|string|in:asc,desc',
         ];
     }
 }

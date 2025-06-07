@@ -15,27 +15,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
+        User::factory()->admin()->create([
             'name' => 'Admin User',
             'email' => 'admin@example.com',
-            'role' => UserRole::Admin->value
         ]);
 
-        $organizer = User::factory()->create([
+        $organizer = User::factory()->organizer()->create([
             'name' => 'Organizer User',
             'email' => 'organizer@example.com',
-            'role' => UserRole::Organizer->value
         ]);
 
         $events = Event::factory(4)->create([
             'organizer_id' => $organizer->id,
         ]);
 
-        $attendees = User::factory(16)->create([
-            'role' => UserRole::Attendee->value,
-        ]);
+        $attendees = User::factory(16)->attendee()->create();
 
         $events->each(function ($event, $index) use ($attendees) {
             $eventAttendees = $attendees->slice($index * 4, 4);

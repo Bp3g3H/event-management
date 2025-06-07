@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class UserScopeFilterAndSortTest extends TestCase
+class UserFilterAndSortTest extends TestCase
 {
     use RefreshDatabase;
 

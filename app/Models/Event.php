@@ -39,7 +39,7 @@ class Event extends Model
         return $this->belongsToMany(User::class, 'attendees', 'event_id', 'user_id');
     }
 
-    public function scopeFilter($query, array $filters)
+    public function scopeFilterAndSort($query, array $filters)
     {
         if (!empty($filters['title'])) {
             $query->where('title', 'ILIKE', '%' . $filters['title'] . '%');
@@ -61,6 +61,12 @@ class Event extends Model
         if (!empty($filters['organizer_id'])) {
             $query->where('organizer_id', $filters['organizer_id']);
         }
+
+        $sortBy = $filters['sort_by'] ?? 'created_at';
+        $sortOrder = $filters['sort_order'] ?? 'desc';
+        $query->orderBy($sortBy, $sortOrder);
+
+        return $query;
     }
 
     public function IsOpenForCheckIn() : bool

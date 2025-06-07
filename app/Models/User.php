@@ -84,9 +84,10 @@ class User extends Authenticatable
             $query->where('role', $filters['role']);
         }
 
-        // Sorting
         $sortBy = $filters['sort_by'] ?? 'created_at';
         $sortOrder = $filters['sort_order'] ?? 'desc';
         $query->orderBy($sortBy, $sortOrder);
+
+        return $query;
     }
 }

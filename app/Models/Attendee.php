@@ -67,9 +67,11 @@ class Attendee extends Model
                 ->join('users as organizers', 'events.organizer_id', '=', 'organizers.id')
                 ->orderBy('organizers.name', $sortOrder)
                 ->select('attendees.*');
-        } elseif (in_array($sortBy, ['rsvp_status', 'created_at'])) {
+        } else {
             $query->orderBy($sortBy, $sortOrder);
         }
+
+        return $query;
     }
 
     public function checkIn(): void
