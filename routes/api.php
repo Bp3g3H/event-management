@@ -5,6 +5,7 @@ use App\Http\Controllers\CheckInController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\EnsureUserIsAttendee;
+use App\Models\Event;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -16,10 +17,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('/attendees/{attendee}', [AttendeeController::class, 'destroy'])->can('delete', 'attendee');
 
     Route::get('/events', [EventController::class, 'index']);
-    Route::post('/events', [EventController::class, 'store']);
+    Route::post('/events', [EventController::class, 'store'])->can('store', Event::class);
     Route::get('/events/{event}', [EventController::class, 'show']);
-    Route::put('/events/{event}', [EventController::class, 'update']);
-    Route::delete('/events/{event}', [EventController::class, 'destroy']);
+    Route::put('/events/{event}', [EventController::class, 'update'])->can('update', 'event');
+    Route::delete('/events/{event}', [EventController::class, 'destroy'])->can('destroy', 'event');
 
     Route::post('/events/{event}/check-in', CheckInController::class)->middleware(EnsureUserIsAttendee::class);
 

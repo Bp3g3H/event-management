@@ -72,6 +72,11 @@ class User extends Authenticatable
         return $this->role === UserRole::Admin->value;
     }
 
+     public function isOrganizer(): bool
+    {
+        return $this->role === UserRole::Organizer->value;
+    }
+
     public function scopeFilterAndSort($query, array $filters) 
     {
         if (!empty($filters['name'])) {
