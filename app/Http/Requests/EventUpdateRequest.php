@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\UserRole;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Enum;
 
-class UserCreateRequest extends FormRequest
+class EventUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +22,10 @@ class UserCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8|confirmed',
-            'role' => ['required', new Enum(UserRole::class)],
+            'title' => 'sometimes|string|max:255',
+            'description' => 'sometimes|string',
+            'date' => 'sometimes|date',
+            'location' => 'sometimes|string|max:255',
         ];
     }
 }

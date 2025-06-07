@@ -6,7 +6,7 @@ use App\Enums\RsvpStatus;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
 
-class AttendeeCreateRequest extends FormRequest
+class AttendeeStoreRequest extends FormRequest
 {
     public function authorize(): bool
     {

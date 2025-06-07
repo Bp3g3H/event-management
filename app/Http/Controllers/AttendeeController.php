@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\RsvpStatus;
-use App\Http\Requests\AttendeeCreateRequest;
+use App\Http\Requests\AttendeeStoreRequest;
 use App\Http\Requests\AttendeeIndexRequest;
 use App\Http\Requests\AttendeeUpdateRequest;
 use App\Http\Resources\AttendeeResponse;
@@ -29,7 +29,7 @@ class AttendeeController extends Controller
         return new AttendeeResponse($attendee->load(['user', 'event']));
     }
 
-    public function store(AttendeeCreateRequest $request)
+    public function store(AttendeeStoreRequest $request)
     {
         $validated = $request->validated();
         $userId = Auth::id();

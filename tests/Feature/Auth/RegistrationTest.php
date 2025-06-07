@@ -20,11 +20,13 @@ class RegistrationTest extends TestCase
 
         $response->assertCreated();
         $response->assertJsonStructure([
-            'id',
-            'name',
-            'email',
-            'created_at',
-            'updated_at',
+            'data' => [
+                'name',
+                'email',
+                'role',
+                'created_at',
+                'updated_at',
+            ],
         ]);
     }
 }

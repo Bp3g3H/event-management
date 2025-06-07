@@ -19,7 +19,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/events', [EventController::class, 'index']);
     Route::post('/events', [EventController::class, 'store'])->can('store', Event::class);
     Route::get('/events/{event}', [EventController::class, 'show']);
-    Route::put('/events/{event}', [EventController::class, 'update'])->can('update', 'event');
+    Route::patch('/events/{event}', [EventController::class, 'update'])->can('update', 'event');
     Route::delete('/events/{event}', [EventController::class, 'destroy'])->can('destroy', 'event');
 
     Route::post('/events/{event}/check-in', CheckInController::class)->middleware(EnsureUserIsAttendee::class);

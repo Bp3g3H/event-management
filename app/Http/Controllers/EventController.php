@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EventIndexRequest;
-use App\Http\Requests\EventRequest;
+use App\Http\Requests\EventStoreRequest;
+use App\Http\Requests\EventUpdateRequest;
 use App\Http\Resources\EventResponse;
 use App\Models\Event;
 
@@ -26,7 +27,7 @@ class EventController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(EventRequest $request)
+    public function store(EventStoreRequest $request)
     {
         $event = Event::create($request->validated());
         $event->load('organizer');
@@ -47,7 +48,7 @@ class EventController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(EventRequest $request, Event $event)
+    public function update(EventUpdateRequest $request, Event $event)
     {
         $event->update($request->validated());
         $event->load('organizer');

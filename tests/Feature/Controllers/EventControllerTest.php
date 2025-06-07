@@ -75,7 +75,7 @@ class EventControllerTest extends TestCase
             'organizer_id' => $admin->id,
         ];
 
-        $response = $this->putJson("/api/events/{$event->id}", $data);
+        $response = $this->patchJson("/api/events/{$event->id}", $data);
 
         $response->assertOk();
         $response->assertJsonFragment(['title' => 'Updated Title']);
@@ -118,7 +118,7 @@ class EventControllerTest extends TestCase
             'location' => 'Updated Location',
             'organizer_id' => $organizer->id,
         ];
-        $response = $this->putJson("/api/events/{$event->id}", $updateData);
+        $response = $this->patchJson("/api/events/{$event->id}", $updateData);
         $response->assertOk()->assertJsonFragment(['title' => 'Updated Organizer Event']);
 
         $response = $this->deleteJson("/api/events/{$event->id}");
@@ -151,7 +151,7 @@ class EventControllerTest extends TestCase
             'location' => 'Updated Location',
             'organizer_id' => $organizer->id,
         ];
-        $response = $this->putJson("/api/events/{$event->id}", $updateData);
+        $response = $this->patchJson("/api/events/{$event->id}", $updateData);
         $response->assertOk()->assertJsonFragment(['title' => 'Updated Admin Event']);
 
         $response = $this->deleteJson("/api/events/{$event->id}");
@@ -182,7 +182,7 @@ class EventControllerTest extends TestCase
             'location' => 'Should Not Update',
             'organizer_id' => $attendee->id,
         ];
-        $this->putJson("/api/events/{$event->id}", $updateData)->assertForbidden();
+        $this->patchJson("/api/events/{$event->id}", $updateData)->assertForbidden();
 
         $this->deleteJson("/api/events/{$event->id}")->assertForbidden();
     }
@@ -201,7 +201,7 @@ class EventControllerTest extends TestCase
             'location' => 'Should Not Update',
             'organizer_id' => $organizer->id,
         ];
-        $this->putJson("/api/events/{$event->id}", $updateData)->assertForbidden();
+        $this->patchJson("/api/events/{$event->id}", $updateData)->assertForbidden();
 
         $this->deleteJson("/api/events/{$event->id}")->assertForbidden();
     }
