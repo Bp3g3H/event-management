@@ -113,6 +113,14 @@ Event Management is a Laravel-based web application for managing events, attende
 
 ---
 
+## 📑 Postman Collection
+
+You can find and use the full API documentation and example requests in the shared Postman collection:
+
+[Event Management System Postman Collection](https://www.postman.com/test22-5006/workspace/eventmanagementsystem/collection/21046332-9d35c61b-8d72-4aea-9832-a10835068a43?action=share&creator=21046332&active-environment=21046332-eaf2d077-582e-4f39-878d-6b7067e745f4)
+
+---
+
 ## 🛡️ License
 
 This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
