@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Model;
+namespace Tests\Unit\Models;
 
 use App\Enums\RsvpStatus;
 use App\Models\User;
