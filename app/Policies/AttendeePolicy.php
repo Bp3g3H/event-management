@@ -7,18 +7,17 @@ use App\Models\User;
 
 class AttendeePolicy
 {
-    /**
-     * Determine whether the user can update the model.
-     */
     public function update(User $user, Attendee $attendee): bool
     {
-        return $attendee->user_id === $user->id;
+        return $this->isOwner($user, $attendee);
     }
 
-    /**
-     * Determine whether the user can delete the model.
-     */
     public function delete(User $user, Attendee $attendee): bool
+    {
+        return $this->isOwner($user, $attendee);
+    }
+
+    private function isOwner(User $user, Attendee $attendee): bool
     {
         return $attendee->user_id === $user->id;
     }
