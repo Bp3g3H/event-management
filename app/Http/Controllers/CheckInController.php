@@ -14,16 +14,16 @@ class CheckInController extends Controller
     public function __invoke(Request $request, Event $event)
     {
         $attendee = $request->attributes->get('attendee');
-        
+
         if ($event->IsOpenForCheckIn()) {
             return response()->json([
-                'message' => 'Check-in is only allowed one day before and on the day of the event.'
+                'message' => 'Check-in is only allowed one day before and on the day of the event.',
             ], Response::HTTP_BAD_REQUEST);
         }
 
         if ($attendee->check_in) {
             return response()->json([
-                'message' => 'You have already checked in for this event.'
+                'message' => 'You have already checked in for this event.',
             ], Response::HTTP_CONFLICT);
         }
 

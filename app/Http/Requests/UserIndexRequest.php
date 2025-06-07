@@ -23,10 +23,10 @@ class UserIndexRequest extends FormRequest
      */
     public function rules(): array
     {
-          return [
+        return [
             'name' => 'sometimes|string|max:255',
             'email' => 'sometimes|string|max:255',
-            'role' =>  ['sometimes', new Enum(UserRole::class)],
+            'role' => ['sometimes', new Enum(UserRole::class)],
             'per_page' => 'sometimes|integer|min:1|max:100',
             'sort_by' => 'sometimes|string|in:name,email,role,created_at',
             'sort_order' => 'sometimes|string|in:asc,desc',

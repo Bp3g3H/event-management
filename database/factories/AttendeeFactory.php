@@ -19,16 +19,16 @@ class AttendeeFactory extends Factory
      */
     public function definition(): array
     {
-          return [
+        return [
             'user_id' => User::factory(),
             'event_id' => Event::factory(),
             'rsvp_status' => $this->faker->randomElement([
                 RsvpStatus::Pending->value,
                 RsvpStatus::Accepted->value,
-                RsvpStatus::Declined->value
+                RsvpStatus::Declined->value,
             ]),
             'check_in' => false,
-            'check_in_timestamp' => null
+            'check_in_timestamp' => null,
         ];
     }
 

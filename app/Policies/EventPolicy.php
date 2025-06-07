@@ -14,7 +14,7 @@ class EventPolicy
 
     public function update(User $user, Event $event): bool
     {
-       return $user->isAdmin() || $this->isEventOrganizer($user, $event);
+        return $user->isAdmin() || $this->isEventOrganizer($user, $event);
     }
 
     public function destroy(User $user, Event $event): bool

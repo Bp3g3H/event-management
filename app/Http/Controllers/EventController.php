@@ -9,16 +9,17 @@ use App\Models\Event;
 
 class EventController extends Controller
 {
-        /**
+    /**
      * Display a listing of the resource.
      */
     public function index(EventIndexRequest $request)
     {
         $validated = $request->validated();
 
-         $events = Event::with('organizer')
+        $events = Event::with('organizer')
             ->filterAndSort($validated)
             ->paginate($validated['per_page'] ?? 15);
+
         return EventResponse::collection($events);
     }
 
@@ -29,6 +30,7 @@ class EventController extends Controller
     {
         $event = Event::create($request->validated());
         $event->load('organizer');
+
         return new EventResponse($event);
     }
 
@@ -38,6 +40,7 @@ class EventController extends Controller
     public function show(Event $event)
     {
         $event->load('organizer');
+
         return new EventResponse($event);
     }
 
@@ -48,6 +51,7 @@ class EventController extends Controller
     {
         $event->update($request->validated());
         $event->load('organizer');
+
         return new EventResponse($event);
     }
 
@@ -57,6 +61,7 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         $event->delete();
+
         return response()->json(['message' => 'Event deleted successfully']);
     }
 }

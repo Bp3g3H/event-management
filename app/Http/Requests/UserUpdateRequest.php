@@ -32,7 +32,7 @@ class UserUpdateRequest extends FormRequest
                 'string',
                 new Enum(UserRole::class),
                 function ($attribute, $value, $fail) {
-                    if ($this->has('role') && !$this->user()->isAdmin()) {
+                    if ($this->has('role') && ! $this->user()->isAdmin()) {
                         $fail('Only admins can change the role.');
                     }
                 },

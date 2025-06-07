@@ -29,29 +29,29 @@ class Attendee extends Model
 
     public function scopeFilterAndSort($query, array $filters, $userId = null)
     {
-         if ($userId) {
+        if ($userId) {
             $query->where('user_id', $userId);
         }
-        
-        if (!empty($filters['event_id'])) {
+
+        if (! empty($filters['event_id'])) {
             $query->where('event_id', $filters['event_id']);
         }
-        if (!empty($filters['event_title'])) {
+        if (! empty($filters['event_title'])) {
             $query->whereHas('event', function ($q) use ($filters) {
-                $q->where('title', 'ILIKE', '%' . $filters['event_title'] . '%');
+                $q->where('title', 'ILIKE', '%'.$filters['event_title'].'%');
             });
         }
-        if (!empty($filters['organizer'])) {
+        if (! empty($filters['organizer'])) {
             $query->whereHas('event.organizer', function ($q) use ($filters) {
-                $q->where('name', 'ILIKE', '%' . $filters['organizer'] . '%');
+                $q->where('name', 'ILIKE', '%'.$filters['organizer'].'%');
             });
         }
-        if (!empty($filters['organizer_id'])) {
+        if (! empty($filters['organizer_id'])) {
             $query->whereHas('event', function ($q) use ($filters) {
                 $q->where('organizer_id', $filters['organizer_id']);
             });
         }
-        if (!empty($filters['rsvp_status'])) {
+        if (! empty($filters['rsvp_status'])) {
             $query->where('rsvp_status', $filters['rsvp_status']);
         }
 

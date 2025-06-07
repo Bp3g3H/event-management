@@ -30,19 +30,19 @@ class AuthenticationTest extends TestCase
     {
         $user = User::factory()->create();
 
-         $response = $this->post('/api/login', [
+        $response = $this->post('/api/login', [
             'email' => $user->email,
             'password' => 'wrong-password',
         ]);
- 
+
         $response->assertStatus(422);
         $response->assertJson([
             'message' => 'These credentials do not match our records.',
             'errors' => [
                 'email' => [
-                    'These credentials do not match our records.'
-                ]
-            ]
+                    'These credentials do not match our records.',
+                ],
+            ],
         ]);
     }
 
@@ -55,7 +55,7 @@ class AuthenticationTest extends TestCase
 
         $response->assertOk();
         $response->assertJson([
-            'message' => 'Logged out successfully'
+            'message' => 'Logged out successfully',
         ]);
     }
 }

@@ -39,7 +39,7 @@ class AttendeeController extends Controller
 
         if ($exists) {
             return response()->json([
-                'message' => 'You have already registered as an attendee for this event.'
+                'message' => 'You have already registered as an attendee for this event.',
             ], Response::HTTP_CONFLICT);
         }
         $attendee = Attendee::create([
@@ -54,12 +54,14 @@ class AttendeeController extends Controller
     public function update(AttendeeUpdateRequest $request, Attendee $attendee)
     {
         $attendee->update($request->validated());
+
         return new AttendeeResponse($attendee);
     }
 
     public function destroy(Attendee $attendee)
     {
         $attendee->delete();
+
         return response()->json(['message' => 'Attendee deleted successfully']);
     }
 }

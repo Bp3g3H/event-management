@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Controllers;
 
-use App\Models\User;
 use App\Models\Event;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -18,6 +18,7 @@ class EventControllerTest extends TestCase
     {
         $user = $user ?: User::factory()->create();
         $this->actingAs($user, 'sanctum');
+
         return $user;
     }
 

@@ -24,9 +24,9 @@ class EnsureUserIsAttendee
             ->where('event_id', $event->id)
             ->first();
 
-        if (!$attendee) {
+        if (! $attendee) {
             return response()->json([
-                'message' => 'You are not registered as an attendee for this event.'
+                'message' => 'You are not registered as an attendee for this event.',
             ], HttpResponse::HTTP_NOT_FOUND);
         }
 

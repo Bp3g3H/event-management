@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class AuthenticatedSessionController extends Controller
 {
-        /**
+    /**
      * Handle an incoming authentication request (login).
      */
     public function store(LoginRequest $request)
@@ -17,7 +17,7 @@ class AuthenticatedSessionController extends Controller
 
         $user = $request->user();
 
-         $user->tokens()->delete();
+        $user->tokens()->delete();
 
         // Create a new token for the user
         $token = $user->createToken('auth_token')->plainTextToken;
@@ -39,7 +39,7 @@ class AuthenticatedSessionController extends Controller
         }
 
         return response()->json([
-            'message' => 'Logged out successfully'
+            'message' => 'Logged out successfully',
         ]);
     }
 }

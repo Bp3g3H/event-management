@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Policies;
 
-use App\Enums\UserRole;
 use App\Models\Event;
 use App\Models\User;
 use App\Policies\EventPolicy;
@@ -18,7 +17,7 @@ class EventPolicyTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->policy = new EventPolicy();
+        $this->policy = new EventPolicy;
     }
 
     public function test_admin_can_store_update_and_destroy()

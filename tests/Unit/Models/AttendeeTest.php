@@ -3,9 +3,9 @@
 namespace Tests\Unit\Models;
 
 use App\Enums\RsvpStatus;
-use App\Models\User;
-use App\Models\Event;
 use App\Models\Attendee;
+use App\Models\Event;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

@@ -31,14 +31,14 @@ return Application::configure(basePath: dirname(__DIR__))
             if ($previous instanceof ModelNotFoundException) {
                 $fullModel = $previous->getModel();
                 $model = str($fullModel)->afterLast('\\');
-                
+
                 return response()->json([
-                    'message' => $model . ' not found'
+                    'message' => $model.' not found',
                 ], Response::HTTP_NOT_FOUND);
-            } else if ($previous instanceof AuthorizationException) {
+            } elseif ($previous instanceof AuthorizationException) {
                 return response()->json([
-                    'message' => 'This action is unauthorized'
-                ], Response::HTTP_FORBIDDEN); 
+                    'message' => 'This action is unauthorized',
+                ], Response::HTTP_FORBIDDEN);
             }
         });
     })->create();

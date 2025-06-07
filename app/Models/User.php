@@ -72,20 +72,20 @@ class User extends Authenticatable
         return $this->role === UserRole::Admin->value;
     }
 
-     public function isOrganizer(): bool
+    public function isOrganizer(): bool
     {
         return $this->role === UserRole::Organizer->value;
     }
 
-    public function scopeFilterAndSort($query, array $filters) 
+    public function scopeFilterAndSort($query, array $filters)
     {
-        if (!empty($filters['name'])) {
-            $query->where('name', 'ILIKE', '%' . $filters['name'] . '%');
+        if (! empty($filters['name'])) {
+            $query->where('name', 'ILIKE', '%'.$filters['name'].'%');
         }
-        if (!empty($filters['email'])) {
-            $query->where('email', 'ILIKE', '%' . $filters['email'] . '%');
+        if (! empty($filters['email'])) {
+            $query->where('email', 'ILIKE', '%'.$filters['email'].'%');
         }
-        if (!empty($filters['role'])) {
+        if (! empty($filters['role'])) {
             $query->where('role', $filters['role']);
         }
 

@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Controllers;
 
-use App\Models\User;
-use App\Models\Event;
 use App\Models\Attendee;
+use App\Models\Event;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
 use Tests\TestCase;
@@ -17,6 +17,7 @@ class CheckInControllerTest extends TestCase
     {
         $user = User::factory()->create();
         $this->actingAs($user, 'sanctum');
+
         return $user;
     }
 

@@ -41,24 +41,24 @@ class Event extends Model
 
     public function scopeFilterAndSort($query, array $filters)
     {
-        if (!empty($filters['title'])) {
-            $query->where('title', 'ILIKE', '%' . $filters['title'] . '%');
+        if (! empty($filters['title'])) {
+            $query->where('title', 'ILIKE', '%'.$filters['title'].'%');
         }
-        if (!empty($filters['description'])) {
-            $query->where('description', 'ILIKE', '%' . $filters['description'] . '%');
+        if (! empty($filters['description'])) {
+            $query->where('description', 'ILIKE', '%'.$filters['description'].'%');
         }
-        if (!empty($filters['date'])) {
+        if (! empty($filters['date'])) {
             $query->whereDate('date', $filters['date']);
         }
-        if (!empty($filters['location'])) {
-            $query->where('location', 'ILIKE', '%' . $filters['location'] . '%');
+        if (! empty($filters['location'])) {
+            $query->where('location', 'ILIKE', '%'.$filters['location'].'%');
         }
-        if (!empty($filters['organizer'])) {
+        if (! empty($filters['organizer'])) {
             $query->whereHas('organizer', function ($q) use ($filters) {
-                $q->where('name', 'ILIKE', '%' . $filters['organizer'] . '%');
+                $q->where('name', 'ILIKE', '%'.$filters['organizer'].'%');
             });
         }
-        if (!empty($filters['organizer_id'])) {
+        if (! empty($filters['organizer_id'])) {
             $query->where('organizer_id', $filters['organizer_id']);
         }
 
@@ -69,12 +69,12 @@ class Event extends Model
         return $query;
     }
 
-    public function IsOpenForCheckIn() : bool
+    public function IsOpenForCheckIn(): bool
     {
         $eventDate = new \DateTime($this->date);
         $dayBefore = (clone $eventDate)->modify('-1 day');
-        $eventDate->setTime(23,59,59);
-        $now = new \DateTime();
+        $eventDate->setTime(23, 59, 59);
+        $now = new \DateTime;
 
         return $now < $dayBefore || $now > $eventDate;
     }

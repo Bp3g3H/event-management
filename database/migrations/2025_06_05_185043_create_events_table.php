@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreign('organizer_id', 'fk_event_user')
                 ->references('id')->on('users')
                 ->onDelete('cascade');
-    });
+        });
     }
 
     /**

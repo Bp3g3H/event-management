@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Policies;
 
-use App\Models\User;
 use App\Models\Attendee;
+use App\Models\User;
 use App\Policies\AttendeePolicy;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -16,8 +16,8 @@ class AttendeePolicyTest extends TestCase
     {
         $user = User::factory()->create();
         $attendee = Attendee::factory()->create(['user_id' => $user->id]);
-        $policy = new AttendeePolicy();
-   
+        $policy = new AttendeePolicy;
+
         $this->assertTrue($policy->update($user, $attendee));
         $this->assertTrue($policy->delete($user, $attendee));
     }
@@ -27,7 +27,7 @@ class AttendeePolicyTest extends TestCase
         $user = User::factory()->create();
         $otherUser = User::factory()->create();
         $attendee = Attendee::factory()->create(['user_id' => $otherUser->id]);
-        $policy = new AttendeePolicy();
+        $policy = new AttendeePolicy;
 
         $this->assertFalse($policy->update($user, $attendee));
         $this->assertFalse($policy->delete($user, $attendee));

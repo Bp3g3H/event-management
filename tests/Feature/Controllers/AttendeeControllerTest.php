@@ -18,6 +18,7 @@ class AttendeeControllerTest extends TestCase
     {
         $user = User::factory()->create();
         $this->actingAs($user, 'sanctum');
+
         return $user;
     }
 

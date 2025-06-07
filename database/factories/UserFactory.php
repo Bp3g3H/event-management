@@ -31,7 +31,7 @@ class UserFactory extends Factory
                 UserRole::Admin->value,
                 UserRole::Organizer->value,
                 UserRole::Attendee->value,
-            ])
+            ]),
         ];
     }
 

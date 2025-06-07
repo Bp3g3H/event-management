@@ -14,11 +14,14 @@ class AttendeeFilterAndSortTest extends TestCase
     use RefreshDatabase;
 
     private User $user;
+
     private User $otherUser;
+
     private Event $event;
+
     private Event $otherEvent;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

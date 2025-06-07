@@ -21,7 +21,7 @@ class EventIndexRequest extends FormRequest
      */
     public function rules(): array
     {
-         return [
+        return [
             'title' => 'sometimes|string|max:255',
             'description' => 'sometimes|string',
             'date' => 'sometimes|date',

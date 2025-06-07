@@ -30,18 +30,21 @@ class UserController extends Controller
     public function store(UserCreateRequest $request)
     {
         $user = User::create($request->validated());
+
         return (new UserResponse($user))->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
     public function update(UserUpdateRequest $request, User $user)
     {
         $user->update($request->validated());
+
         return new UserResponse($user);
     }
 
     public function destroy(User $user)
     {
         $user->delete();
+
         return response()->json(['message' => 'User deleted successfully']);
     }
 }

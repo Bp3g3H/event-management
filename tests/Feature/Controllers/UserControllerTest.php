@@ -22,7 +22,7 @@ class UserControllerTest extends TestCase
         $this->authenticateAs($admin);
 
         $user = User::factory()->attendee()->create();
-        //dd($admin, 'test');
+        // dd($admin, 'test');
         $this->getJson('/api/users')->assertOk();
 
         $this->getJson("/api/users/{$user->id}")->assertOk();
@@ -51,7 +51,6 @@ class UserControllerTest extends TestCase
         $organizer = User::factory()->organizer()->create();
         $other = User::factory()->attendee()->create();
         $this->authenticateAs($organizer);
-
 
         $this->getJson('/api/users')->assertForbidden();
 
