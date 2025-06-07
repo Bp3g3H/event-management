@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
@@ -12,5 +13,6 @@ abstract class TestCase extends BaseTestCase
         $this->withHeaders([
             'Accept' => 'application/json',
         ]);
+        User::where('email', env('DEFAULT_ADMIN_EMAIL'))->delete();
     }
 }
