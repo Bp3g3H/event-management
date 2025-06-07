@@ -16,7 +16,6 @@ return new class extends Migration
         $password = env('DEFAULT_ADMIN_PASSWORD', 'password');
         $name = 'Admin';
 
-        // Only create if not exists
         if (!DB::table('users')->where('email', $email)->exists()) {
             DB::table('users')->insert([
                 'name' => $name,
