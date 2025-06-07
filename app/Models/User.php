@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Enums\UserRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -63,5 +65,28 @@ class User extends Authenticatable
     public function attendingEvents(): BelongsToMany
     {
         return $this->belongsToMany(Event::class, 'attendees', 'user_id', 'event_id');
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === UserRole::Admin->value;
+    }
+
+    public function scopeFilterAndSort($query, array $filters) 
+    {
+        if (!empty($filters['name'])) {
+            $query->where('name', 'ILIKE', '%' . $filters['name'] . '%');
+        }
+        if (!empty($filters['email'])) {
+            $query->where('email', 'ILIKE', '%' . $filters['email'] . '%');
+        }
+        if (!empty($filters['role'])) {
+            $query->where('role', $filters['role']);
+        }
+
+        // Sorting
+        $sortBy = $filters['sort_by'] ?? 'created_at';
+        $sortOrder = $filters['sort_order'] ?? 'desc';
+        $query->orderBy($sortBy, $sortOrder);
     }
 }

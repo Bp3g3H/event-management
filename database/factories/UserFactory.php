@@ -34,4 +34,31 @@ class UserFactory extends Factory
             ])
         ];
     }
+
+    public function admin(): static
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'role' => UserRole::Admin->value,
+            ];
+        });
+    }
+
+    public function organizer(): static
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'role' => UserRole::Organizer->value,
+            ];
+        });
+    }
+
+    public function attendee(): static
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'role' => UserRole::Attendee->value,
+            ];
+        });
+    }
 }
