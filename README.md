@@ -48,8 +48,8 @@ Follow these steps to install and run the Event Management project on your machi
 3. **Install dependencies using Sail**
 
     ```sh
+    composer install
     ./vendor/bin/sail up -d
-    ./vendor/bin/sail composer install
     ```
 
 4. **Generate application key**
