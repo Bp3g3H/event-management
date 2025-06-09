@@ -17,7 +17,7 @@ class EventController extends Controller
     {
         $validated = $request->validated();
 
-        $events = Event::with('organizer')
+        $events = Event::query()
             ->filterAndSort($validated)
             ->paginate($validated['per_page'] ?? 15);
 

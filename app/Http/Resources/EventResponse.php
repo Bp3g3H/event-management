@@ -19,7 +19,8 @@ class EventResponse extends JsonResource
             'description' => $this->description,
             'date' => $this->date ? $this->date->toDateString() : null,
             'location' => $this->location,
-            'organizer' => UserResponse::make($this->whenLoaded('user')),
+            'organizer_id' => $this->organizer_id,
+            'organizer' => UserResponse::make($this->whenLoaded('organizer')),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

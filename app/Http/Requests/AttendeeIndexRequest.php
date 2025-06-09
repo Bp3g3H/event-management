@@ -24,6 +24,8 @@ class AttendeeIndexRequest extends FormRequest
             'per_page' => 'sometimes|integer|min:1|max:100',
             'sort_by' => 'sometimes|string|in:event_title,organizer_name,rsvp_status,created_at',
             'sort_order' => 'sometimes|string|in:asc,desc',
+            'include' => 'sometimes|array',
+            'include.*' => 'string|in:event'
         ];
     }
 }

@@ -41,6 +41,10 @@ class Event extends Model
 
     public function scopeFilterAndSort($query, array $filters)
     {
+        if (! empty($filters['include'])) {
+            $query->with($filters['include']);
+        };
+
         if (! empty($filters['title'])) {
             $query->where('title', 'ILIKE', '%'.$filters['title'].'%');
         }
@@ -54,6 +58,7 @@ class Event extends Model
             $query->where('location', 'ILIKE', '%'.$filters['location'].'%');
         }
         if (! empty($filters['organizer'])) {
+            $query->with('organizer');
             $query->whereHas('organizer', function ($q) use ($filters) {
                 $q->where('name', 'ILIKE', '%'.$filters['organizer'].'%');
             });

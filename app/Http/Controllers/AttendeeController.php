@@ -22,7 +22,7 @@ class AttendeeController extends Controller
         if (!$user->isAdmin()) {
             $userId = $user->id;
         }
-        $attendees = Attendee::with(['user', 'event', 'event.organizer'])
+        $attendees = Attendee::with(['user'])
             ->filterAndSort($validated,  $userId)
             ->paginate($validated['per_page'] ?? 15);
 
