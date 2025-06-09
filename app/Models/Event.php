@@ -43,7 +43,7 @@ class Event extends Model
     {
         if (! empty($filters['include'])) {
             $query->with($filters['include']);
-        };
+        }
 
         if (! empty($filters['title'])) {
             $query->where('title', 'ILIKE', '%'.$filters['title'].'%');

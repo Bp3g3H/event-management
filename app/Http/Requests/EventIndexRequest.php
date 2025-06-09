@@ -32,7 +32,7 @@ class EventIndexRequest extends FormRequest
             'sort_by' => 'sometimes|string|in:title,description,date,location,organizer,organizer_id,created_at',
             'sort_order' => 'sometimes|string|in:asc,desc',
             'include' => 'sometimes|array',
-            'include.*' => 'string|in:organizer'
+            'include.*' => 'string|in:organizer',
         ];
     }
 }

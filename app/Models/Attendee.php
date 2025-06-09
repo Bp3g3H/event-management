@@ -30,7 +30,7 @@ class Attendee extends Model
     public function scopeFilterAndSort($query, array $filters, $userId = null)
     {
         $eventIsLoaded = false;
-        if (!empty($filters['include'])) {
+        if (! empty($filters['include'])) {
             $query->with($filters['include']);
             $eventIsLoaded = true;
         }
@@ -38,7 +38,7 @@ class Attendee extends Model
         $sortBy = $filters['sort_by'] ?? 'created_at';
         $sortOrder = $filters['sort_order'] ?? 'desc';
 
-        if (!$eventIsLoaded && $this->shouldLoadEvent($filters)) {
+        if (! $eventIsLoaded && $this->shouldLoadEvent($filters)) {
             $query->with(['event']);
 
             if ($this->shouldLoadEventOrganizer($filters)) {
@@ -50,26 +50,26 @@ class Attendee extends Model
             $query->where('user_id', $userId);
         }
 
-        if (!empty($filters['event_id'])) {
+        if (! empty($filters['event_id'])) {
             $query->where('event_id', $filters['event_id']);
         }
 
-        if (!empty($filters['event_title'])) {
+        if (! empty($filters['event_title'])) {
             $query->whereHas('event', function ($q) use ($filters) {
                 $q->where('title', 'ILIKE', '%'.$filters['event_title'].'%');
             });
         }
-        if (!empty($filters['organizer'])) {
+        if (! empty($filters['organizer'])) {
             $query->whereHas('event.organizer', function ($q) use ($filters) {
                 $q->where('name', 'ILIKE', '%'.$filters['organizer'].'%');
             });
         }
-        if (!empty($filters['organizer_id'])) {
+        if (! empty($filters['organizer_id'])) {
             $query->whereHas('event', function ($q) use ($filters) {
                 $q->where('organizer_id', $filters['organizer_id']);
             });
         }
-        if (!empty($filters['rsvp_status'])) {
+        if (! empty($filters['rsvp_status'])) {
             $query->where('rsvp_status', $filters['rsvp_status']);
         }
 
@@ -98,9 +98,10 @@ class Attendee extends Model
     private function shouldLoadEvent(array $filters): bool
     {
         $sortBy = $filters['sort_by'] ?? null;
+
         return
-            !empty($filters['event_title']) ||
-            !empty($filters['organizer']) ||
+            ! empty($filters['event_title']) ||
+            ! empty($filters['organizer']) ||
             $sortBy === 'event_title' ||
             $sortBy === 'organizer_name';
     }
@@ -108,8 +109,9 @@ class Attendee extends Model
     private function shouldLoadEventOrganizer(array $filters): bool
     {
         $sortBy = $fillable['sort_by'] ?? null;
-        return 
-            !empty($filters['organizer']) ||
+
+        return
+            ! empty($filters['organizer']) ||
             $sortBy === 'organizer_name';
     }
 }

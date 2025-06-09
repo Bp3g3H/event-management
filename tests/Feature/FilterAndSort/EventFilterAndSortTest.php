@@ -185,7 +185,7 @@ class EventFilterAndSortTest extends TestCase
         $this->assertEquals(['Third', 'Second', 'First'], $results);
     }
 
-    public function test_scopeFilterAndSort_with_include_eager_loads_relationships()
+    public function test_scope_filter_and_sort_with_include_eager_loads_relationships()
     {
         $organizer = User::factory()->organizer()->create();
         Event::factory()->create(['organizer_id' => $organizer->id]);

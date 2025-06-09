@@ -14,7 +14,7 @@ class AttendeeControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-     protected function authenticate(?User $user = null): User
+    protected function authenticate(?User $user = null): User
     {
         $user = $user ?: User::factory()->create();
         $this->actingAs($user, 'sanctum');

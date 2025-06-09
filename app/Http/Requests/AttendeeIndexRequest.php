@@ -25,7 +25,7 @@ class AttendeeIndexRequest extends FormRequest
             'sort_by' => 'sometimes|string|in:event_title,organizer_name,rsvp_status,created_at',
             'sort_order' => 'sometimes|string|in:asc,desc',
             'include' => 'sometimes|array',
-            'include.*' => 'string|in:event'
+            'include.*' => 'string|in:event',
         ];
     }
 }

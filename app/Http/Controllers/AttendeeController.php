@@ -19,11 +19,11 @@ class AttendeeController extends Controller
         $user = Auth::user();
 
         $userId = null;
-        if (!$user->isAdmin()) {
+        if (! $user->isAdmin()) {
             $userId = $user->id;
         }
         $attendees = Attendee::with(['user'])
-            ->filterAndSort($validated,  $userId)
+            ->filterAndSort($validated, $userId)
             ->paginate($validated['per_page'] ?? 15);
 
         return AttendeeResponse::collection($attendees);
