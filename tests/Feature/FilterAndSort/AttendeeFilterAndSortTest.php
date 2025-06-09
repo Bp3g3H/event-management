@@ -163,4 +163,41 @@ class AttendeeFilterAndSortTest extends TestCase
         $this->assertCount(1, $results);
         $this->assertEquals($a1->id, $results->first()->id);
     }
+
+    public function it_eager_loads_relationships_when_include_is_present()
+    {
+        $user = User::factory()->create();
+        $event = Event::factory()->create();
+        $attendee = Attendee::factory()->create(['user_id' => $user->id, 'event_id' => $event->id]);
+
+        $filters = ['include' => ['event']];
+        $result = Attendee::query()->filterAndSort($filters)->get();
+
+        $this->assertTrue($result->first()->relationLoaded('event'));
+    }
+
+    public function it_eager_loads_event_when_include_is_not_present_but_shouldLoadEvent_returns_true()
+    {
+        $user = User::factory()->create();
+        $event = Event::factory()->create();
+        $attendee = Attendee::factory()->create(['user_id' => $user->id, 'event_id' => $event->id]);
+
+        $filters = ['event_title' => 'Test Event'];
+        $result = Attendee::query()->filterAndSort($filters)->get();
+
+        $this->assertTrue($result->first()->relationLoaded('event'));
+    }
+
+    public function it_eager_loads_event_and_event_organizer_when_sort_by_organizer_name()
+    {
+        $user = User::factory()->create();
+        $event = Event::factory()->create(['organizer_id' => $user->id]);
+        $attendee = Attendee::factory()->create(['user_id' => $user->id, 'event_id' => $event->id]);
+
+        $filters = ['sort_by' => 'organizer_name'];
+        $result = Attendee::query()->filterAndSort($filters)->get();
+
+        $this->assertTrue($result->first()->relationLoaded('event'));
+        $this->assertTrue($result->first()->event->relationLoaded('organizer'));
+    }
 }

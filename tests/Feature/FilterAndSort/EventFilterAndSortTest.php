@@ -174,14 +174,25 @@ class EventFilterAndSortTest extends TestCase
 
     public function test_default_sort_is_created_at_desc()
     {
-        $first = Event::factory()->create(['title' => 'First']);
+        Event::factory()->create(['title' => 'First']);
         sleep(1);
-        $second = Event::factory()->create(['title' => 'Second']);
+        Event::factory()->create(['title' => 'Second']);
         sleep(1);
-        $third = Event::factory()->create(['title' => 'Third']);
+        Event::factory()->create(['title' => 'Third']);
 
         $results = Event::filterAndSort([])->pluck('title')->toArray();
 
         $this->assertEquals(['Third', 'Second', 'First'], $results);
+    }
+
+    public function test_scopeFilterAndSort_with_include_eager_loads_relationships()
+    {
+        $organizer = User::factory()->organizer()->create();
+        Event::factory()->create(['organizer_id' => $organizer->id]);
+
+        $filters = ['include' => ['organizer']];
+        $events = Event::query()->filterAndSort($filters)->get();
+
+        $this->assertTrue($events->first()->relationLoaded('organizer'));
     }
 }
