@@ -39,6 +39,11 @@ class Event extends Model
         return $this->belongsToMany(User::class, 'attendees', 'event_id', 'user_id');
     }
 
+    public function eventAttendeesReports(): HasMany
+    {
+        return $this->hasMany(EventAttendeesReport::class, 'event_id');
+    }
+
     public function scopeFilterAndSort($query, array $filters)
     {
         if (! empty($filters['include'])) {

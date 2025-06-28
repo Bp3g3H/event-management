@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AttendeeController;
 use App\Http\Controllers\CheckInController;
+use App\Http\Controllers\EventAttendeesReportController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\EnsureUserIsAttendee;
@@ -34,6 +35,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         ->whereNumber('event')
         ->middleware(EnsureUserIsAttendee::class);
 
+    Route::post('/events/{event}/attendees-report', [EventAttendeesReportController::class, 'store']);
+
     Route::get('/users', [UserController::class, 'index'])->can('viewAny', User::class);
     Route::post('/users', [UserController::class, 'store'])->can('create', User::class);
     Route::get('/users/{user}', [UserController::class, 'show'])
@@ -45,6 +48,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('/users/{user}', [UserController::class, 'destroy'])
         ->whereNumber('user')
         ->can('delete', 'user');
+
+    
 });
 
 require __DIR__.'/auth.php';
